@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
     android:background="@color/colorPrimary">
-
+    
 
 </android.support.constraint.ConstraintLayout>
