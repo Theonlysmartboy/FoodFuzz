@@ -1,6 +1,7 @@
 package com.otemainc.foodfuzz;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -72,7 +73,6 @@ public class RegisterActivity extends AppCompatActivity {
                         // On complete call either onSignupSuccess or onSignupFailed
                         // depending on success
                         onSignupSuccess();
-                        // onSignupFailed();
                         progressDialog.dismiss();
                     }
                 }, 3000);
@@ -80,7 +80,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public void onSignupSuccess() {
-        _signupButton.setEnabled(true);
+        Intent main = new Intent(RegisterActivity.this,MainActivity.class);
+        startActivity(main);
         setResult(RESULT_OK, null);
         finish();
     }
