@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         BackgroundWorker worker = new BackgroundWorker(this);
         worker.execute(type,email,password);
 
-        // TODO: Implement your own authentication logic here.
+        // authentication logic.
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
 
-                // TODO: Implement successful signup logic here
+                // successful signup logic
                 // By default we just finish the Activity and log them in automatically
                 this.finish();
             }
