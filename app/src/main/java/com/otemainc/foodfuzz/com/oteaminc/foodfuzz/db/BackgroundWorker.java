@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 
 import com.otemainc.foodfuzz.LoginActivity;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class BackgroundWorker extends AsyncTask<String,Void,Void> {
     Context context;
     public BackgroundWorker(Context ctx) {
@@ -13,6 +16,15 @@ public class BackgroundWorker extends AsyncTask<String,Void,Void> {
 
     @Override
     protected Void doInBackground(String... strings) {
+        String type = strings[0];
+        String login_url = "http://10.0.2.2:8082/foodfuzzbackend/auth/login.php";
+        if(type.equals("login")){
+            try {
+                URL url = new URL(login_url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
 return null;
     }
 
