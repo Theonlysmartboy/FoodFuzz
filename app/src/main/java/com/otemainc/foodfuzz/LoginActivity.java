@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.otemainc.foodfuzz.com.oteaminc.foodfuzz.db.BackgroundWorker;
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
@@ -66,6 +68,9 @@ public class LoginActivity extends AppCompatActivity {
 
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
+        String type = "login";
+        BackgroundWorker worker = new BackgroundWorker(this);
+        worker.execute(type,email,password);
 
         // TODO: Implement your own authentication logic here.
 
