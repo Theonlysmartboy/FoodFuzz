@@ -14,6 +14,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class BackgroundWorker extends AsyncTask<String,Void,Void> {
@@ -26,6 +27,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,Void> {
     @Override
     protected Void doInBackground(String... strings) {
         String type = strings[0];
+        String email = strings[1];
+        String pass = strings[2];
         String login_url = "http://10.0.2.2:8082/foodfuzzbackend/auth/login.php";
         if(type.equals("login")){
             try {
@@ -36,7 +39,12 @@ public class BackgroundWorker extends AsyncTask<String,Void,Void> {
                 con.setDoInput(true);
                 OutputStream loginout = con.getOutputStream();
                 BufferedWriter loginwriter = new BufferedWriter(new OutputStreamWriter(loginout, StandardCharsets.UTF_8));
-
+                String post_data = URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"
+                        +URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(pass,"UTF-8");
+                loginwriter.write(post_data);
+                loginwriter.flush();
+                loginwriter.close();
+                loginout.close();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
