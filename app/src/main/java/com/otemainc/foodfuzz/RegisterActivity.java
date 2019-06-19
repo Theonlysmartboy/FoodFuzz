@@ -101,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
         String cpassword = _confirmpasswordText.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
-            _nameText.setError("at least 3 characters");
+            _nameText.setError("Name should be at least 3 characters");
             valid = false;
         } else {
             _nameText.setError(null);
@@ -114,8 +114,8 @@ public class RegisterActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+        if (password.isEmpty() || password.length() < 4) {
+            _passwordText.setError("Password should be at least 4 alphanumeric characters");
             valid = false;
         } else {
             _passwordText.setError(null);
