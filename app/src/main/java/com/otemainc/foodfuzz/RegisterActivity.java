@@ -13,10 +13,16 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -24,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText _nameText, _emailText, _passwordText, _confirmpasswordText;
     private Button _signupButton;
     private TextView _loginLink;
-    private static String URL_REGIST;
+    private static String URL_REGIST = "http://192.168.100.250:8082/foodfuzzbackend/auth/register.php";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +66,6 @@ public class RegisterActivity extends AppCompatActivity {
             onSignupFailed();
             return;
         }
-
         _signupButton.setEnabled(false);
 
         final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this,
@@ -72,49 +77,61 @@ public class RegisterActivity extends AppCompatActivity {
        final String name = _nameText.getText().toString().trim();
        final String email = _emailText.getText().toString().trim();
        final String password = _passwordText.getText().toString().trim();
-        StringRequest registerRequest = new StringRequest(Request.Method.POST, URL_REGIST,
+        StringRequest registerStringRequest = new StringRequest(Request.Method.POST, URL_REGIST,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        try {
+                            JSONObject registerObject = new JSONObject(response);
+                            String registerSuccess = registerObject.getString("success");
+                            if(registerSuccess.equals("1")){
+                                Toast.makeText(RegisterActivity.this,"Registration Successfull", Toast.LENGTH_SHORT).show();
+                                new android.os.Handler().postDelayed(
+                                        new Runnable() {
+                                            public void run() {
+                                                progressDialog.dismiss();
+                                                onSignupSuccess();
+                                            }
+                                        }, 3000);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(RegisterActivity.this,"Registration Failed " + e.toString(), Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                            onSignupFailed();
 
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(RegisterActivity.this,"Registration Error " + error.toString(), Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        onSignupFailed();
                     }
                 }){
-            protected Map<String, String> getParams() throws AuthFailureError {
-                return super.getParams();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("name", name);
+                params.put("email", email);
+                params.put("password", password);
+                return params;
             }
         };
-
-
-
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
-                        onSignupSuccess();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
-    }
-
+        RequestQueue registerrequestQueue = Volley.newRequestQueue(this);
+        registerrequestQueue.add(registerStringRequest);
+            }
 
     public void onSignupSuccess() {
-        Intent main = new Intent(RegisterActivity.this,MainActivity.class);
+        Intent main = new Intent(RegisterActivity.this,LoginActivity.class);
         startActivity(main);
         setResult(RESULT_OK, null);
         finish();
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
-        _signupButton.setEnabled(true);
+               _signupButton.setEnabled(true);
     }
 
     public boolean validate() {
