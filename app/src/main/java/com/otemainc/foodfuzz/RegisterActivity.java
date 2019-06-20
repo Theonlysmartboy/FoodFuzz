@@ -42,14 +42,12 @@ public class RegisterActivity extends AppCompatActivity {
         _confirmpasswordText = findViewById(R.id.input_cpassword);
         _signupButton=findViewById(R.id.btn_signup);
         _loginLink = findViewById(R.id.link_login);
-
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signup();
             }
         });
-
         _loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,7 +97,6 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this,"Registration Failed " + e.toString(), Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                             onSignupFailed();
-
                         }
                     }
                 },
