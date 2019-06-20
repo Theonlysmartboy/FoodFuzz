@@ -11,12 +11,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import java.util.Map;
+
 public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
-
-    EditText _nameText, _emailText, _passwordText, _confirmpasswordText;
-     Button _signupButton;
-    TextView _loginLink;
+    private EditText _nameText, _emailText, _passwordText, _confirmpasswordText;
+    private Button _signupButton;
+    private TextView _loginLink;
+    private static String URL_REGIST;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,12 +68,29 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
+        //  signup logic.
+       final String name = _nameText.getText().toString().trim();
+       final String email = _emailText.getText().toString().trim();
+       final String password = _passwordText.getText().toString().trim();
+        StringRequest registerRequest = new StringRequest(Request.Method.POST, URL_REGIST,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
-        String name = _nameText.getText().toString();
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-        // TODO: Implement your own signup logic here.
+                    }
+                }){
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+        };
+
+
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
