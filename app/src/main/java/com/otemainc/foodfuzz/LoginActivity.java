@@ -65,14 +65,15 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
-
+        // authentication logic.
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
         String type = "login";
         BackgroundWorker worker = new BackgroundWorker(this);
         worker.execute(type,email,password);
 
-        // authentication logic.
+
+
 
         new android.os.Handler().postDelayed(
                 new Runnable() {

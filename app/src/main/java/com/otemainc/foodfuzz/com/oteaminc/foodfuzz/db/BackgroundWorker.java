@@ -2,9 +2,13 @@ package com.otemainc.foodfuzz.com.oteaminc.foodfuzz.db;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+
+import com.otemainc.foodfuzz.LoginActivity;
+import com.otemainc.foodfuzz.R;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,8 +26,8 @@ import java.nio.charset.StandardCharsets;
 public class BackgroundWorker extends AsyncTask<String, Void, String> {
     protected Context context;
     AlertDialog alert;
-    public BackgroundWorker(Context ctx) {
-        context = ctx;
+        public BackgroundWorker(Context ctx) {
+        this.context = ctx;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -32,7 +36,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String type = strings[0];
         String email = strings[1];
         String pass = strings[2];
-        String login_url = "http://10.0.2.2:8082/foodfuzzbackend/auth/login.php";
+        String login_url = "http://192.168.100.250:8082/foodfuzzbackend/auth/login.php";
         if(type.equals("login")){
             try {
                 URL url = new URL(login_url);
@@ -72,13 +76,14 @@ return null;
     protected void onPreExecute() {
         alert = new AlertDialog.Builder(context).create();
         alert.setTitle("Login");
+        alert.setIcon(R.drawable.ic_notifications_active);
             }
 
     @Override
     protected void onPostExecute(String result) {
         alert.setMessage(result);
         alert.show();
-    }
+           }
 
     @Override
     protected void onProgressUpdate(Void... values) {
