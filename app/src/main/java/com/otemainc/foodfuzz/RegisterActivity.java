@@ -83,19 +83,19 @@ public class RegisterActivity extends AppCompatActivity {
                             JSONObject registerObject = new JSONObject(response);
                             String registerSuccess = registerObject.getString("success");
                             if(registerSuccess.equals("1")){
-                                Toast.makeText(RegisterActivity.this,"Registration Successfull", Toast.LENGTH_SHORT).show();
                                 new android.os.Handler().postDelayed(
                                         new Runnable() {
                                             public void run() {
                                                 progressDialog.dismiss();
+                                                Toast.makeText(RegisterActivity.this,"Registration Successfull", Toast.LENGTH_SHORT).show();
                                                 onSignupSuccess();
                                             }
                                         }, 3000);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(RegisterActivity.this,"Registration Failed " + e.toString(), Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
+                            Toast.makeText(RegisterActivity.this,"Registration Failed " + e.toString(), Toast.LENGTH_SHORT).show();
                             onSignupFailed();
                         }
                     }
@@ -103,8 +103,8 @@ public class RegisterActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(RegisterActivity.this,"Registration Error " + error.toString(), Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
+                        Toast.makeText(RegisterActivity.this,"Registration Error " + error.toString(), Toast.LENGTH_SHORT).show();
                         onSignupFailed();
                     }
                 }){
@@ -132,7 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public boolean validate() {
-        boolean valid = true;
+        boolean valid = false;
 
         String name = _nameText.getText().toString();
         String email = _emailText.getText().toString();

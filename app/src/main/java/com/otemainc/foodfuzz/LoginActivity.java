@@ -112,8 +112,8 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(LoginActivity.this,"Login Error" + e.toString(),Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
+                            Toast.makeText(LoginActivity.this,"Login Error" + e.toString(),Toast.LENGTH_LONG).show();
                             onLoginFailed();
                         }
 
@@ -122,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
                         Toast.makeText(LoginActivity.this,"Login Failed "+error.toString(), Toast.LENGTH_LONG).show();
                     }
                 })
