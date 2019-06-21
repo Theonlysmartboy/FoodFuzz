@@ -12,13 +12,29 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+    private EditText _emailText, _passwordText;
+    private Button _loginButton;
+    private TextView _signupLink;
+    private static String URL_LOGIN = "http://192.168.100.250:8082/foodfuzzbackend/auth/login.php";
 
-     EditText _emailText, _passwordText;
-     Button _loginButton;
-    TextView _signupLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
-
         _signupLink.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -64,23 +79,63 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
         // authentication logic.
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        final String email = _emailText.getText().toString().trim();
+        final String password = _passwordText.getText().toString().trim();
+        StringRequest loginStringRequest = new StringRequest(Request.Method.POST, URL_LOGIN,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject loginObject = new JSONObject(response);
+                            String loginSuccess = loginObject.getString("success");
+                            JSONArray loginArray = loginObject.getJSONArray("login");
+                            //if login is successful
+                            if(loginSuccess.equals("1")){
+                                for(int i =0; i< loginArray.length();i++){
+                                    JSONObject object = loginArray.getJSONObject(i);
+                                    String name = object.getString("name").trim();
+                                    String email = object.getString("email").trim();
+                                    Toast.makeText(LoginActivity.this, "Login Success.\n Welcome " +name, Toast.LENGTH_SHORT).show();
+                                }
+                                new android.os.Handler().postDelayed(
+                                        new Runnable() {
+                                            public void run() {
+                                                // On complete call either onLoginSuccess or onLoginFailed
+                                                onLoginSuccess();
+                                                // onLoginFailed();
+                                                progressDialog.dismiss();
+                                            }
+                                        }, 3000);
+                            }
+                            else {
+                                Toast.makeText(LoginActivity.this,"Invalid Email/Password",Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(LoginActivity.this,"Login Error" + e.toString(),Toast.LENGTH_SHORT).show();
+                        }
 
-
-
-
-
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
                     }
-                }, 3000);
-    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(LoginActivity.this,"Login Failed", Toast.LENGTH_SHORT).show();
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email",email);
+                params.put("password",password);
+                return params;
+            }
+        };
+        RequestQueue loginRequestQue = Volley.newRequestQueue(this);
+        loginRequestQue.add(loginStringRequest);
+
+           }
 
 
     @Override
