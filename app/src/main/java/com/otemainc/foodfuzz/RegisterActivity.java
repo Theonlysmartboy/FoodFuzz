@@ -59,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void signup() {
         Log.d(TAG, "Signup");
-
         if (!validate()) {
             onSignupFailed();
             return;

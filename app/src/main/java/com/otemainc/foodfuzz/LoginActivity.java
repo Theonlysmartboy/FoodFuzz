@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView _signupLink;
     private static String URL_LOGIN = "http://192.168.100.250:8082/foodfuzzbackend/auth/login.php";
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         _passwordText = findViewById(R.id.input_password);
         _loginButton = findViewById(R.id.btn_login);
         _signupLink = findViewById(R.id.link_signup);
-
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -65,12 +63,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login() {
         Log.d(TAG, "Login");
-
         if (!validate()) {
             onLoginFailed();
             return;
         }
-
         _loginButton.setEnabled(false);
 
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
@@ -104,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 }
                                             }, 3000);
                                 }
-                                                            }
+                            }
                             else {
                                 Toast.makeText(LoginActivity.this,"Invalid Email/Password",Toast.LENGTH_LONG).show();
                                 progressDialog.dismiss();
@@ -116,7 +112,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this,"Login Error" + e.toString(),Toast.LENGTH_LONG).show();
                             onLoginFailed();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -137,7 +132,6 @@ public class LoginActivity extends AppCompatActivity {
         };
         RequestQueue loginRequestQue = Volley.newRequestQueue(this);
         loginRequestQue.add(loginStringRequest);
-
            }
 
 
