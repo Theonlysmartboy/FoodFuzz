@@ -93,26 +93,28 @@ public class LoginActivity extends AppCompatActivity {
                             if(loginSuccess.equals("1")){
                                 for(int i =0; i< loginArray.length();i++){
                                     JSONObject object = loginArray.getJSONObject(i);
-                                    String name = object.getString("name").trim();
-                                    String email = object.getString("email").trim();
-                                    Toast.makeText(LoginActivity.this, "Login Success.\n Welcome " +name, Toast.LENGTH_SHORT).show();
+                                    final String name = object.getString("name").trim();
+                                    final String email = object.getString("email").trim();
+                                   new android.os.Handler().postDelayed(
+                                            new Runnable() {
+                                                public void run() {
+                                                    progressDialog.dismiss();
+                                                    Toast.makeText(LoginActivity.this, "Login Success.\n Welcome " +name, Toast.LENGTH_LONG).show();
+                                                    onLoginSuccess();
+                                                }
+                                            }, 3000);
                                 }
-                                new android.os.Handler().postDelayed(
-                                        new Runnable() {
-                                            public void run() {
-                                                // On complete call either onLoginSuccess or onLoginFailed
-                                                onLoginSuccess();
-                                                // onLoginFailed();
-                                                progressDialog.dismiss();
-                                            }
-                                        }, 3000);
-                            }
+                                                            }
                             else {
-                                Toast.makeText(LoginActivity.this,"Invalid Email/Password",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this,"Invalid Email/Password",Toast.LENGTH_LONG).show();
+                                progressDialog.dismiss();
+                                onLoginFailed();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(LoginActivity.this,"Login Error" + e.toString(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this,"Login Error" + e.toString(),Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
+                            onLoginFailed();
                         }
 
                     }
@@ -120,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginActivity.this,"Login Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this,"Login Failed "+error.toString(), Toast.LENGTH_LONG).show();
                     }
                 })
         {
@@ -163,8 +165,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-        _loginButton.setEnabled(true);
+               _loginButton.setEnabled(true);
     }
 
     public boolean validate() {
