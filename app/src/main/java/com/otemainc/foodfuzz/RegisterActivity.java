@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -42,12 +41,14 @@ public class RegisterActivity extends AppCompatActivity {
         _confirmpasswordText = findViewById(R.id.input_cpassword);
         _signupButton=findViewById(R.id.btn_signup);
         _loginLink = findViewById(R.id.link_login);
+
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signup();
             }
         });
+
         _loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void signup() {
         Log.d(TAG, "Signup");
+
         if (!validate()) {
             onSignupFailed();
             return;
@@ -71,9 +73,9 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
         //  signup logic.
-       final String name = _nameText.getText().toString().trim();
-       final String email = _emailText.getText().toString().trim();
-       final String password = _passwordText.getText().toString().trim();
+        final String name = _nameText.getText().toString().trim();
+        final String email = _emailText.getText().toString().trim();
+        final String password = _passwordText.getText().toString().trim();
         StringRequest registerStringRequest = new StringRequest(Request.Method.POST, URL_REGIST,
                 new Response.Listener<String>() {
                     @Override
@@ -82,11 +84,11 @@ public class RegisterActivity extends AppCompatActivity {
                             JSONObject registerObject = new JSONObject(response);
                             String registerSuccess = registerObject.getString("success");
                             if(registerSuccess.equals("1")){
+                                progressDialog.dismiss();
+                                Toast.makeText(RegisterActivity.this,"Registration Successfull", Toast.LENGTH_SHORT).show();
                                 new android.os.Handler().postDelayed(
                                         new Runnable() {
                                             public void run() {
-                                                progressDialog.dismiss();
-                                                Toast.makeText(RegisterActivity.this,"Registration Successfull", Toast.LENGTH_SHORT).show();
                                                 onSignupSuccess();
                                             }
                                         }, 3000);
@@ -96,6 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             Toast.makeText(RegisterActivity.this,"Registration Failed " + e.toString(), Toast.LENGTH_SHORT).show();
                             onSignupFailed();
+
                         }
                     }
                 },
@@ -117,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
         };
         RequestQueue registerrequestQueue = Volley.newRequestQueue(this);
         registerrequestQueue.add(registerStringRequest);
-            }
+    }
 
     public void onSignupSuccess() {
         Intent main = new Intent(RegisterActivity.this,LoginActivity.class);
@@ -127,11 +130,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed() {
-               _signupButton.setEnabled(true);
+        _signupButton.setEnabled(true);
     }
 
     public boolean validate() {
-        boolean valid = false;
+        boolean valid = true;
 
         String name = _nameText.getText().toString();
         String email = _emailText.getText().toString();

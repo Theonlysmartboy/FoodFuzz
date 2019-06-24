@@ -90,20 +90,16 @@ public class LoginActivity extends AppCompatActivity {
                                 for(int i =0; i< loginArray.length();i++){
                                     JSONObject object = loginArray.getJSONObject(i);
                                     final String name = object.getString("name").trim();
-                                    final String email = object.getString("email").trim();
-                                   new android.os.Handler().postDelayed(
-                                            new Runnable() {
-                                                public void run() {
-                                                    progressDialog.dismiss();
-                                                    Toast.makeText(LoginActivity.this, "Login Success.\n Welcome " +name, Toast.LENGTH_LONG).show();
+                                    final String email1 = object.getString("email").trim();
+
+                                                    Toast.makeText(LoginActivity.this, "Login Success.\n Welcome " +name, Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
                                                     Intent main = new Intent(LoginActivity.this,MainActivity.class);
-                                                    main.putExtra("name",name);
-                                                    main.putExtra("email",email);
+                                                    main.putExtra("uName", name);
+                                                    main.putExtra("uEmail", email1);
                                                     startActivity(main);
                                                     finish();
                                                 }
-                                            }, 3000);
-                                }
                             }
                             else {
                                 Toast.makeText(LoginActivity.this,"Invalid Email/Password",Toast.LENGTH_LONG).show();
