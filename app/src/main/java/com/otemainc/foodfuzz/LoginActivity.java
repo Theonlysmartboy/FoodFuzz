@@ -96,7 +96,11 @@ public class LoginActivity extends AppCompatActivity {
                                                 public void run() {
                                                     progressDialog.dismiss();
                                                     Toast.makeText(LoginActivity.this, "Login Success.\n Welcome " +name, Toast.LENGTH_LONG).show();
-                                                    onLoginSuccess();
+                                                    Intent main = new Intent(LoginActivity.this,MainActivity.class);
+                                                    main.putExtra("name",name);
+                                                    main.putExtra("email",email);
+                                                    startActivity(main);
+                                                    finish();
                                                 }
                                             }, 3000);
                                 }
@@ -151,12 +155,6 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         // disable going back to the MainActivity
         moveTaskToBack(true);
-    }
-
-    public void onLoginSuccess() {
-        Intent main = new Intent(LoginActivity.this,MainActivity.class);
-        startActivity(main);
-        finish();
     }
 
     public void onLoginFailed() {
