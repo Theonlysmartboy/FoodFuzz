@@ -91,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
                                     JSONObject object = loginArray.getJSONObject(i);
                                     final String name = object.getString("name").trim();
                                     final String email1 = object.getString("email").trim();
-
                                                     Toast.makeText(LoginActivity.this, "Login Success.\n Welcome " +name, Toast.LENGTH_SHORT).show();
                                     progressDialog.dismiss();
                                                     Intent main = new Intent(LoginActivity.this,MainActivity.class);
