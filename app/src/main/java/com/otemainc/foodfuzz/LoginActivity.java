@@ -1,6 +1,8 @@
 package com.otemainc.foodfuzz;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -93,6 +95,8 @@ public class LoginActivity extends AppCompatActivity {
                                     final String email1 = object.getString("email").trim();
                                                     Toast.makeText(LoginActivity.this, "Login Success.\n Welcome " +name, Toast.LENGTH_SHORT).show();
                                     progressDialog.dismiss();
+                                    SharedPreferences preferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                                    
                                                     Intent main = new Intent(LoginActivity.this,MainActivity.class);
                                                     main.putExtra("uName", name);
                                                     main.putExtra("uEmail", email1);
