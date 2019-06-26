@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class tabPagerAdapter  extends FragmentStatePagerAdapter {
-    String[] tabArray = new String[]{"Food","Drinks",};
+    String[] tabArray = new String[]{"Food","Drinks","Restaurant","Cart"};
 
     public tabPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -14,7 +14,7 @@ public class tabPagerAdapter  extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return super.getPageTitle(position);
+        return tabArray(position);
     }
 
     @Override
