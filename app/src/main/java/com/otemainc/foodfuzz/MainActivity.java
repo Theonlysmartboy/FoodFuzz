@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,6 +24,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView name,email;
     private ImageView image;
+    TabLayout tab;
+    ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,11 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
        navigationView.setNavigationItemSelectedListener(this);
+       tab = findViewById(R.id.tabs);
+       pager = findViewById(R.id.container);
+       tabPagerAdapter pagerAdapter = new tabPagerAdapter(getSupportFragmentManager());
+       pager.setAdapter(pagerAdapter);
+       tab.setupWithViewPager(pager);
        }
 
     @Override
