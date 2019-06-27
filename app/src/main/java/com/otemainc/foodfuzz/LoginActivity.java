@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     Toast.makeText(LoginActivity.this, "Login Success.\n Welcome " +name, Toast.LENGTH_SHORT).show();
                                     progressDialog.dismiss();
                                     SharedPreferences preferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-                                    
+
                                                     Intent main = new Intent(LoginActivity.this,MainActivity.class);
                                                     main.putExtra("uName", name);
                                                     main.putExtra("uEmail", email1);
