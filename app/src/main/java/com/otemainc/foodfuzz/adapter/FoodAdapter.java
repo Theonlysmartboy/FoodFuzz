@@ -1,4 +1,4 @@
-package com.otemainc.foodfuzz.com.otemainc.foodfuzz.adapter;
+package com.otemainc.foodfuzz.adapter;
 
 import android.media.Image;
 
