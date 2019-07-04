@@ -1,9 +1,14 @@
-package com.otemainc.foodfuzz;
+package com.otemainc.foodfuzz.adapter;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.otemainc.foodfuzz.Cart;
+import com.otemainc.foodfuzz.Drink;
+import com.otemainc.foodfuzz.Food;
+import com.otemainc.foodfuzz.Restaurant;
 
 public class tabPagerAdapter  extends FragmentStatePagerAdapter {
     String[] tabArray = new String[]{"Food","Drinks","Restaurant","Cart"};
