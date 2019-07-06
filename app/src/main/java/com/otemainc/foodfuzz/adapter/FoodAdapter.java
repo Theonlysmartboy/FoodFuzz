@@ -1,39 +1,28 @@
 package com.otemainc.foodfuzz.adapter;
 
 import android.media.Image;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 
-public class FoodAdapter {
-    private Image image;
-    private String title;
-    private String cost;
-
-    public FoodAdapter(Image image, String title, String cost) {
-        this.image = image;
-        this.title = title;
-        this.cost = cost;
+public class FoodAdapter extends BaseAdapter {
+        @Override
+    public int getCount() {
+        return 0;
     }
 
-    public Image getImage() {
-        return image;
+    @Override
+    public Object getItem(int i) {
+        return null;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    @Override
+    public long getItemId(int i) {
+        return 0;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getCost() {
-        return cost;
-    }
-
-    public void setCost(String cost) {
-        this.cost = cost;
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        return null;
     }
 }

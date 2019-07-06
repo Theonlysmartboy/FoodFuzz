@@ -27,6 +27,7 @@ public class Food extends Fragment {
         View view = inflater.inflate(R.layout.fragment_food, container, false);
         food = view.findViewById(R.id.FoodContainer);
         food.setDividerHeight(2);
+
         return view;
     }
 
