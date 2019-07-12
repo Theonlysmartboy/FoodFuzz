@@ -13,7 +13,7 @@
                 android:layout_height="match_parent"
                 android:horizontalSpacing="1dp"
                 android:verticalSpacing="1dp"
-                android:numColumns="2"
+                android:numColumns="3"
                     android:background="@color/colorAccent"/>
 
 </RelativeLayout>
